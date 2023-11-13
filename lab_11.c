@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define MAX_COMMAND_LENGTH 256
 
@@ -36,7 +37,10 @@ int main() {
     while (1) {
         // Prompt user for a command
         printf("\nEnter a UNIX command: ");
-        fgets(user_input, sizeof(user_input), stdin);
+        if (fgets(user_input, sizeof(user_input), stdin) == NULL) {
+            perror("Error reading input");
+            exit(EXIT_FAILURE);
+        }
 
         // Remove the newline character
         user_input[strcspn(user_input, "\n")] = '\0';
